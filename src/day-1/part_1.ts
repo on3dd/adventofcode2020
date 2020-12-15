@@ -24,7 +24,7 @@ const solution = (path: string) => {
   const tuple = R.reduce(
     (acc: [number, number], a: number) => {
       const num = R.find(func(a), data);
-      return num ? [num, 2020 - num] : acc;
+      return num ? [num, R.subtract(YEAR, num)] : acc;
     },
     [0, 0],
     data,
