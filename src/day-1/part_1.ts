@@ -21,7 +21,7 @@ const solution = (path: string) => {
     );
   });
 
-  const [a, b] = R.reduce(
+  const tuple = R.reduce(
     (acc: [number, number], a: number) => {
       const num = R.find(func(a), data);
       return num ? [num, 2020 - num] : acc;
@@ -31,7 +31,7 @@ const solution = (path: string) => {
   );
 
   // 1009899
-  return R.multiply(a, b);
+  return R.product(tuple);
 };
 
 const path = join(__dirname, './input.txt');
