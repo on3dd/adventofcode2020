@@ -2,6 +2,8 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import R from 'ramda';
 
+type Tuple = [number, number, number];
+
 const solution = (path: string) => {
   const YEAR = 2020;
 
@@ -25,12 +27,13 @@ const solution = (path: string) => {
     return R.and(numbersAreNotEqual, sumAreEqual);
   });
 
-  const truthy = (value: any) => {
+  const truthy = (value: unknown) => {
     return R.complement(R.isNil)(value);
   };
 
-  const tuple = R.reduce(
-    (acc: [number, number, number], a: number) => {
+  const tuple = R.reduceWhile(
+    (acc: Tuple) => R.not(R.sum(acc)),
+    (acc: Tuple, a: number) => {
       const funcOfA = func(a);
 
       const b = R.find((b) => truthy(R.find(funcOfA(b), data)), data);
