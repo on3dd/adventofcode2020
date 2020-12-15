@@ -5,23 +5,24 @@ import R from 'ramda';
 type Tuple = [number, number];
 
 const solution = (path: string) => {
-  const YEAR = 2020;
+  const EXPECTED_AMOUNT = 2020;
 
-  const read = R.pipe(
-    readFileSync,
-    R.toString,
-    R.split('\n'),
-    R.map(parseInt),
-  );
+  const read = (path: string) =>
+    R.pipe(
+      readFileSync,
+      R.toString,
+      R.split('\n'),
+      R.map(parseInt),
+    )(path);
 
   const data = read(path);
 
-  const func = R.curry((a: number, b: number) => {
-    return R.and(
+  const func = R.curry((a: number, b: number) =>
+    R.and(
       R.not(R.equals(a, b)),
-      R.equals(R.sum([a, b]), YEAR),
-    );
-  });
+      R.equals(R.sum([a, b]), EXPECTED_AMOUNT),
+    ),
+  );
 
   const tuple = R.reduceWhile(
     (acc: Tuple) => R.not(R.sum(acc)),
@@ -33,7 +34,6 @@ const solution = (path: string) => {
     data,
   );
 
-  // 1009899
   return R.product(tuple);
 };
 

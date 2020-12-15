@@ -5,31 +5,26 @@ import R from 'ramda';
 type Tuple = [number, number, number];
 
 const solution = (path: string) => {
-  const YEAR = 2020;
+  const EXPECTED_AMOUNT = 2020;
 
-  const read = R.pipe(
-    readFileSync,
-    R.toString,
-    R.split('\n'),
-    R.map(parseInt),
-  );
+  const read = (path: string) =>
+    R.pipe(
+      readFileSync,
+      R.toString,
+      R.split('\n'),
+      R.map(parseInt),
+    )(path);
 
   const data = read(path);
 
-  const func = R.curry((a: number, b: number, c: number) => {
-    const numbersAreNotEqual = R.and(
-      R.not(R.equals(a, b)),
-      R.not(R.equals(b, c)),
-    );
+  const func = R.curry((a: number, b: number, c: number) =>
+    R.and(
+      R.and(R.not(R.equals(a, b)), R.not(R.equals(b, c))),
+      R.equals(R.sum([a, b, c]), EXPECTED_AMOUNT),
+    ),
+  );
 
-    const sumAreEqual = R.equals(R.sum([a, b, c]), YEAR);
-
-    return R.and(numbersAreNotEqual, sumAreEqual);
-  });
-
-  const truthy = (value: unknown) => {
-    return R.complement(R.isNil)(value);
-  };
+  const truthy = (value: unknown) => R.complement(R.isNil)(value);
 
   const tuple = R.reduceWhile(
     (acc: Tuple) => R.not(R.sum(acc)),
@@ -45,7 +40,6 @@ const solution = (path: string) => {
     data,
   );
 
-  // 44211152
   return R.product(tuple);
 };
 
