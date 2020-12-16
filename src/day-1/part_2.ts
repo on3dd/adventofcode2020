@@ -1,19 +1,12 @@
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import R from 'ramda';
+
+import { read, truthy } from '../utils/functions';
 
 type Tuple = [number, number, number];
 
 const solution = (path: string) => {
   const EXPECTED_AMOUNT = 2020;
-
-  const read = (path: string) =>
-    R.pipe(
-      readFileSync,
-      R.toString,
-      R.split('\n'),
-      R.map(parseInt),
-    )(path);
 
   const data = read(path);
 
@@ -23,8 +16,6 @@ const solution = (path: string) => {
       R.equals(R.sum([a, b, c]), EXPECTED_AMOUNT),
     ),
   );
-
-  const truthy = (value: unknown) => R.complement(R.isNil)(value);
 
   const tuple = R.reduceWhile(
     (acc: Tuple) => R.not(R.sum(acc)),

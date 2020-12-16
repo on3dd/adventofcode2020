@@ -1,19 +1,12 @@
-import { readFileSync } from 'fs';
 import { join } from 'path';
 import R from 'ramda';
+
+import { read } from '../utils/functions';
 
 type Tuple = [number, number];
 
 const solution = (path: string) => {
   const EXPECTED_AMOUNT = 2020;
-
-  const read = (path: string) =>
-    R.pipe(
-      readFileSync,
-      R.toString,
-      R.split('\n'),
-      R.map(parseInt),
-    )(path);
 
   const data = read(path);
 
