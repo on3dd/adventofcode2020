@@ -8,7 +8,7 @@ type Tuple = [number, number, number];
 const solution = (path: string) => {
   const EXPECTED_AMOUNT = 2020;
 
-  const data = read(path);
+  const data = R.pipe(read, R.map(parseInt))(path);
 
   const func = R.curry((a: number, b: number, c: number) =>
     R.and(

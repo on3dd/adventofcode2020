@@ -6,7 +6,6 @@ export const read = (path: string) =>
     readFileSync,
     R.toString,
     R.split('\n'),
-    R.map(parseInt),
   )(path);
 
 export const truthy = (value: unknown) =>
