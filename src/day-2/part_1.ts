@@ -40,7 +40,6 @@ const solution = (path: string) => {
     )(length);
   };
 
-  // 586
   return R.length(R.filter(func, data));
 };
 
