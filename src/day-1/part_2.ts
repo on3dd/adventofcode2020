@@ -1,5 +1,5 @@
-import { join } from 'path';
 import R from 'ramda';
+import { join } from 'path';
 
 import { read, truthy } from '../utils/functions';
 
